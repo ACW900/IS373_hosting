@@ -44,12 +44,12 @@ reviewed, selected evidence; never commit credentials or raw server output.
 
 | Evidence | Actual result / link |
 |---|---|
-| Prepared Black/Pylint/pytest and real-image browser checks | Local `check --fast` on Windows (2026-11-06): Black passed; Pylint and pytest failed on Linux-only APIs (`os.geteuid`/`os.chown`, `signal.SIGHUP`) in unchanged template code. Local E2E not run. Full check and E2E: PR CI on Ubuntu, pending |
+| Prepared Black/Pylint/pytest and real-image browser checks | Local `check --fast` on Windows (2026-11-06): Black passed; Pylint and pytest failed on Linux-only APIs (`os.geteuid`/`os.chown`, `signal.SIGHUP`) in unchanged template code. Local E2E not run. Full check on Ubuntu in [PR #2 CI run](https://github.com/ACW900/IS373_hosting/actions/runs/42265996206) (commit `eae7a45`): succeeded; pytest 91 passed (non-E2E) and 2 E2E browser tests passed |
 | Hosted image/commit, trusted HTTPS, valid and rejected API cases | `verify` passed 2026-11-06T17:34Z: pinned digest and commit `4600202` match; trusted HTTPS; 6×7 → 200/42; ÷0 → 400; numeric string → 422. Export with `report` pending |
 | Preservation of unrelated services | `verify`: 3 existing containers unchanged (identity, state, ports) |
 | Own prediction, check interpretation, browser observation and keep/revise reason | [LEARNING.md](LEARNING.md): all recorded with AI help disclosed; check limits not stated (gap) |
 | Accuracy review before publishing learner excerpts | Learner approved accuracy 2026-11-06, before first commit |
-| Actual PR, latest CI, merge and issue closure | Pending |
+| Actual PR, latest CI, merge and issue closure | [PR #2](https://github.com/ACW900/IS373_hosting/pull/2); CI above succeeded; merge and issue closure pending |
 
 Exported evidence: [studio/evidence.json](studio/evidence.json). Link actual CI
 and the PR when available.
