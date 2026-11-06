@@ -2,8 +2,8 @@
 
 ## STUDIO-001 · Launch a tested calculator on an existing server
 
-**Status:** Pending learner scope agreement and actual evidence.
-**Next step:** Confirm your clone with the coach, then follow [Lesson 01](studio/lesson-01.md).
+**Status:** Scope agreed; launch and evidence pending.
+**Next step:** Launch, add the Caddy route, then verify ([Lesson 01](studio/lesson-01.md) step 3).
 **Instructor implementation:** [issue #9](https://github.com/kaw393939/373_hosting/issues/9).
 Create your own issue from the [lesson template](.github/ISSUE_TEMPLATE/studio-calculator.md).
 
@@ -18,10 +18,24 @@ An explicitly agreed adoption of a matching existing deployment is recorded
 as adoption, not a fresh launch. This bounded lesson does not certify the whole
 server baseline or a vulnerability-free image.
 
-- **Public hostname:** Pending.
-- **New launch or adopted deployment, and reason:** Pending.
-- **Own issue / feature branch:** Pending.
-- **Agreed scope or actual access/configuration gap:** Pending.
+- **Public hostname:** `https://calc.acw33firstliveproj.online` (existing DNS
+  already resolves to the server; no route existed before this lesson).
+- **New launch or adopted deployment, and reason:** New launch. `doctor`
+  reported `launch-new` with no existing calculator deployment; on 2026-11-06
+  `launch` started the container but stopped at its HTTPS wait (no Caddy route
+  yet), so it saved no launch report. The later `verify` reports
+  `already-managed`, which describes that verification, not the creation.
+- **Caddy route:** [ACW900/IS-373-TEST-CICD@7e9bf1e](https://github.com/ACW900/IS-373-TEST-CICD/commit/7e9bf1e)
+  on `qa`, deployed by [CI/CD run #14](https://github.com/ACW900/IS-373-TEST-CICD/actions/runs/42262618440)
+  (succeeded). Not yet merged to `main`.
+- **Own issue / feature branch:** [ACW900/IS373_hosting#1](https://github.com/ACW900/IS373_hosting/issues/1)
+  / `studio-001-calculator`.
+- **Agreed scope or actual access/configuration gap:** One pinned image on the
+  existing Docker network `web`, without sudo. Gap: the server's proxy is Caddy
+  (static Caddyfile in the learner's CI/CD repo), not Traefik. The CLI's
+  Traefik labels are inert there, so public routing needs one added `calc.`
+  Caddyfile block deployed through that repo's workflow. `doctor` does not
+  check this route. No proxy is added or replaced.
 
 Private SSH targets and configuration stay in ignored local state. Share only
 reviewed, selected evidence; never commit credentials or raw server output.
@@ -30,14 +44,15 @@ reviewed, selected evidence; never commit credentials or raw server output.
 
 | Evidence | Actual result / link |
 |---|---|
-| Prepared Black/Pylint/pytest and real-image browser checks | Not run; full local E2E needs local Docker or actual CI evidence |
-| Hosted image/commit, trusted HTTPS, valid and rejected API cases | Not verified; export selected evidence with `report` |
-| Preservation of unrelated services | Not verified |
-| Own prediction, check interpretation, browser observation and keep/revise reason | [LEARNING.md](LEARNING.md), Pending; disclose assistance |
-| Accuracy review before publishing learner excerpts | Pending |
-| Actual PR, latest CI, merge and issue closure | Pending |
+| Prepared Black/Pylint/pytest and real-image browser checks | Local `check --fast` on Windows (2026-11-06): Black passed; Pylint and pytest failed on Linux-only APIs (`os.geteuid`/`os.chown`, `signal.SIGHUP`) in unchanged template code. Local E2E not run. Full check on Ubuntu in [PR #2 CI run](https://github.com/ACW900/IS373_hosting/actions/runs/42265996206) (commit `eae7a45`): succeeded; pytest 91 passed (non-E2E) and 2 E2E browser tests passed |
+| Hosted image/commit, trusted HTTPS, valid and rejected API cases | `verify` passed 2026-11-06T17:34Z: pinned digest and commit `4600202` match; trusted HTTPS; 6×7 → 200/42; ÷0 → 400; numeric string → 422. Export with `report` pending |
+| Preservation of unrelated services | `verify`: 3 existing containers unchanged (identity, state, ports) |
+| Own prediction, check interpretation, browser observation and keep/revise reason | [LEARNING.md](LEARNING.md): all recorded with AI help disclosed; check limits not stated (gap) |
+| Accuracy review before publishing learner excerpts | Learner approved accuracy 2026-11-06, before first commit |
+| Actual PR, latest CI, merge and issue closure | [PR #2](https://github.com/ACW900/IS373_hosting/pull/2); CI above succeeded; merge and issue closure pending |
 
-Link the exported `studio/evidence.json`, actual CI and issue/PR when available.
+Exported evidence: [studio/evidence.json](studio/evidence.json). Link actual CI
+and the PR when available.
 CI does not deploy this server. A fixture, green check, timestamp, closed issue
 or AI assertion alone does not establish the full result. `status` reports
 recorded evidence and readiness for instructor review; it does not grade,
